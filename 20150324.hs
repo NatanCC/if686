@@ -25,6 +25,13 @@ merge (a:as) (b:bs) | a <= b = (a: merge as (b:bs))
 merge (a:as) [] = (a: merge as [])
 merge [] (b:bs) = (b: merge [] bs)
 
+--Complexidade
+-- divideLeft = O(n)
+-- divideRight = O(n)
+-- count = O(n)
+-- merge = O(n)
+-- mergeSort = O(n^2)
+
 --------------------------------------------------------------------------------
 -- exercicios da aula
 --------------------------------------------------------------------------------
@@ -62,4 +69,6 @@ isVertical ((x1, y1), (x2, y2)) | x1 == x2 = True
 
 pontoY :: Float -> Reta -> Float
 pontoY a ((x1, y1), (x2, y2)) = ((y2*a)-(y2*x1)-(y1*a)+(y1*x2))/(x2-x1)
+
+
 
