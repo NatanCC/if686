@@ -24,3 +24,10 @@ merge (a:as) (b:bs) | a <= b = (a: merge as (b:bs))
                     | otherwise = (b: merge (a:as) bs)
 merge (a:as) [] = (a: merge as [])
 merge [] (b:bs) = (b: merge [] bs)
+
+--Complexidade
+-- divideLeft = O(n)
+-- divideRight = O(n)
+-- count = O(n)
+-- merge = O(n)
+-- mergeSort = O(n^2)
