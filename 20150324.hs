@@ -70,5 +70,73 @@ isVertical ((x1, y1), (x2, y2)) | x1 == x2 = True
 pontoY :: Float -> Reta -> Float
 pontoY a ((x1, y1), (x2, y2)) = ((y2*a)-(y2*x1)-(y1*a)+(y1*x2))/(x2-x1)
 
+type Pessoa = String
+type Livro = String
+type BancoDados = [(Pessoa, Livro)]
 
+baseExemplo :: BancoDados
+baseExemplo = [("Sergio", "O Senhor dos Aneis"),
+                ("Andre", "Duna"),
+                ("Fernando", "Jonathan Strange & Mr. Norrell"),
+                ("Fernando", "A Game of Thrones")]
+-- livros emprestados
 
+-- consultas
+livros :: BancoDados -> Pessoa ->[Livro]
+livros [] _ = []
+livros l p = [livro | (pessoa, livro) <- l, pessoa == p ]
+
+emprestimos:: BancoDados -> Livro -> [Pessoa]
+emprestimos [] _ = []
+emprestimos l li = [pessoa | (pessoa, livro) <- l, livro == li]
+
+emprestado :: BancoDados -> Livro -> Bool
+emprestado [] _ = False
+emprestado ((p,l):s) li
+   |l == li = True
+   |otherwise = emprestado s li
+
+qtdEmprestimos :: BancoDados -> Pessoa -> Int
+qtdEmprestimos [] _ = 0
+qtdEmprestimos ((p, l):s) pe | pe == p = 1 + qtdEmprestimos s pe
+                             | otherwise = qtdEmprestimos s pe
+
+--atualizações
+
+emprestar :: BancoDados -> Pessoa -> Livro -> BancoDados
+emprestar [] p l = ((p, l):[])
+emprestar bd pe li | emprestado bd li = bd
+                           | otherwise = bd++[(pe, li)]
+
+devolver :: BancoDados -> Pessoa -> Livro -> BancoDados
+devolver [] _ _ = []
+devolver s pessoa livro = [(p, l) | (p, l) <- s, (p, l) /= (pessoa, livro)]
+
+--quickSort
+quickSort :: [Int] -> [Int]
+quickSort [] = []
+quickSort (x:xs) = quickSort [a | a <- xs, a <= x ]++[x]++ quickSort [a | a <- xs, a > x]
+
+--Processamento de Texto
+
+getWord :: String -> String
+getWord [] = []
+getWord (x:xs)
+  | [x] /= " " = (x:(getWord xs))
+  | otherwise = ""
+
+dropWord :: String -> String
+dropWord [] = []
+dropWord (x:xs)
+  | [x] == " " = (x:xs)
+  | otherwise = dropWord xs
+
+dropSpace :: String -> String
+dropSpace [] = []
+dropSpace (x:xs)
+  | [x] == " " = dropSpace xs
+  | otherwise = (x:xs)
+
+type Word = String
+
+--splitWords :: String -> [Word]
