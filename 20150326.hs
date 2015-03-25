@@ -1,6 +1,8 @@
 ----------------------------------------------------------
 -- Trabalho 3 aluno: Natanael Souza dos Santos login: nss
 ----------------------------------------------------------
+
+-- Questão 1
 type HashTable = [(Int, Int)]
 baseHash :: HashTable
 baseHash = [(0,0), (0,0), (0,0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)]
@@ -38,3 +40,29 @@ hasItem (h:s) key code = hasItem s key (code-1)
 
 hashFunction :: Int -> Int
 hashFunction x = (5 * x) `mod` 8
+
+-- Questão 2
+
+comparaConjuntos :: (Eq t) => [t] -> [t] -> String
+comparaConjuntos (x:xs) (y:ys)
+    | inter (x:xs) (y:ys) == [] = "Conjuntos Disjuntos"
+    | uniao (x:xs) (y:ys) == (y:ys) = "B contem A"
+    | uniao (y:ys) (x:xs) == (x:xs) = "A contem B"
+
+
+member :: (Eq t) => t -> [t] -> Bool
+member e [] = False
+member e (x:xs) | x == e = True
+                | otherwise =  member e xs
+
+inter :: (Eq t) => [t] -> [t] -> [t]
+inter [] c = []
+inter (x:xs) c
+    | member x c = x:(inter xs c)
+    | otherwise = inter xs c
+
+uniao :: (Eq t) => [t] -> [t] -> [t]
+uniao [] c =  c
+uniao (x:xs) c
+    | member x c = uniao xs c
+    | otherwise = x:(uniao xs c)
