@@ -44,10 +44,12 @@ hashFunction x = (5 * x) `mod` 8
 -- Questão 2
 
 comparaConjuntos :: (Eq t) => [t] -> [t] -> String
-comparaConjuntos (x:xs) (y:ys)
-    | inter (x:xs) (y:ys) == [] = "Conjuntos Disjuntos"
-    | uniao (x:xs) (y:ys) == (y:ys) = "B contem A"
-    | uniao (y:ys) (x:xs) == (x:xs) = "A contem B"
+comparaConjuntos a b
+    | inter a b == a && inter b a == b = "A igual a B"
+    | inter a b == [] = "Conjuntos Disjuntos"
+    | uniao a b == b = "B contem A"
+    | uniao b a == a = "A contem B"
+	| otherwise = "A interseciona B"
 
 
 member :: (Eq t) => t -> [t] -> Bool
