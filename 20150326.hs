@@ -68,3 +68,31 @@ uniao [] c =  c
 uniao (x:xs) c
     | member x c = uniao xs c
     | otherwise = x:(uniao xs c)
+    
+----------------------------------------------------------
+-- Exercício da aula
+----------------------------------------------------------
+pega [] _ = []
+pega (x:xs) 1 = [x]
+pega (x:xs) y = (x:( pega xs (y-1)))
+
+drope :: [a] -> Int -> [a]
+drope [] _ = []
+drope x 0 =  x
+drope (x:xs) y = drope xs (y-1)
+
+pegaWhile :: (a -> Bool) -> [a] -> [a]
+pegaWhile f (x:xs)
+    | f x = (x: pegaWhile f xs)
+	| otherwise = []
+
+dropeWhile :: (a -> Bool) -> [a] -> [a]
+dropeWhile f (x:xs)
+    | f x = dropeWhile f xs
+	| otherwise = (x:xs)
+
+	
+-- QuickSort Polimorfico
+quickSort :: (Ord a) => [a] -> [a]
+quickSort [] = []
+quickSort (x:xs) = quickSort [a | a <- xs, a <= x ]++[x]++ quickSort [a | a <- xs, a > x]
