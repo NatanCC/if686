@@ -71,3 +71,29 @@ intListToDigit :: [Int] -> String
 intListToDigit [] = []
 intListToDigit (x:xs) = show x ++ intListToDigit xs
 
+----------------------------------------------------------
+-- Exercício da aula ps: aula com monitor
+----------------------------------------------------------
+
+afd :: String ->  [Int] -> [(Int, Int, String)] -> Int -> [Int] -> Bool
+afd cad (est:ys) transi ini fin = percorre transi ini cad fin
+
+
+estado :: [(Int, Int, String)] -> Int -> String -> Int
+estado ((ori, dest, entr):ws) est cad
+                                    | ori == est && entr == cad = dest
+									| otherwise = estado ws est cad
+estado [] _ _ = 0
+
+
+percorre :: [(Int, Int, String)] -> Int -> String -> [Int] -> Bool
+percorre _ est [] fin = aceita est fin
+percorre transi est (x:xs) fin = percorre transi (estado transi est [x]) xs fin
+
+
+aceita :: Int -> [Int] -> Bool
+aceita _ [] =  False
+aceita a (x:xs)
+                | a == x = True
+				| otherwise = aceita a xs
+
