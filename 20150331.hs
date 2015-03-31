@@ -12,10 +12,10 @@
 
 -- Questão 2
 
-lookAndSay :: Int -> Int
-lookAndSay 0 = 0
-lookAndSay 1 = 1
-lookAndSay x = listToInt sequencia (reverseList(count2 sequencia 1))
+lookAndSay :: Int -> String
+lookAndSay 0 = "0"
+lookAndSay 1 = "1"
+lookAndSay x = intListToDigit sequencia
             where
 			listaSequencia = lookAndSay3 [1] (x-1)
 			sequencia = head(reverseList listaSequencia)
@@ -67,4 +67,7 @@ listToInt [] _ = 0
 listToInt _ [] = 0
 listToInt (x:xs) (y:ys) = (x*y) + listToInt xs ys
 
+intListToDigit :: [Int] -> String
+intListToDigit [] = []
+intListToDigit (x:xs) = show x ++ intListToDigit xs
 
