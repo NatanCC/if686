@@ -96,3 +96,43 @@ dropeWhile f (x:xs)
 quickSort :: (Ord a) => [a] -> [a]
 quickSort [] = []
 quickSort (x:xs) = quickSort [a | a <- xs, a <= x ]++[x]++ quickSort [a | a <- xs, a > x]
+
+agrupar :: (Ord t) => [[t]] -> [(t, Int)]
+agrupar l = agrupar3 (agrupar2 (head lista) lista)
+    where
+        lista = quickSort(juntar(l))
+        
+
+
+count :: (Ord t) => t -> [t] -> Int
+count _ [] = 0
+count a (x:xs)
+    | a == x = 1 + count a xs
+    | otherwise = count a xs
+
+juntar :: (Ord t) => [[t]] -> [t]
+juntar [] = []
+juntar (x:xs) = x ++ juntar xs
+
+
+resto :: (Ord t) => t -> [t] -> [t]
+resto _ [] = []
+resto a (x:xs)
+    | a == x = resto a xs
+    | otherwise = (x:xs)
+
+divid :: (Ord t) => t -> [t] -> [t]
+divid _ [] = []
+divid a (x:xs)
+    | a == x = (a:divid a xs)
+    | otherwise = []
+
+agrupar2 :: (Ord t) => t -> [t] -> [[t]]
+agrupar2 _ [] = []
+agrupar2 a (x:xs) = [(divid a (x:xs))]++ agrupar2 (head lista2) lista2
+    where
+        lista2 = resto a (x:xs)
+
+agrupar3 :: (Ord t) => [[t]] -> [(t, Int)]
+agrupar3 [] = []
+agrupar3 (x:xs) = [((head x), (length x))]++ agrupar3 xs
