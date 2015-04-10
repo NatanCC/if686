@@ -16,6 +16,9 @@ data Graph t = NilG
 dade em um grafo e devolve True ou False, caso esse valor esteja ou ñao em
 um dos ńos do grafo-}
 
+grafo :: Graph Int
+grafo = (Node 1 [(2, 2), (3, 2)] (Node 2 [(3, 1)] (Node 3 [] (NilG))))
+
 dfs :: (Eq t) => Graph t -> t -> Bool
 dfs NilG _ = False
 dfs (Node n l g) v = dentro nodes v
@@ -26,7 +29,9 @@ dfs (Node n l g) v = dentro nodes v
 
 
 dfs1 :: (Eq t) => Graph t -> t -> [t] -> [t]
-dfs1 NilG _ _ = []
+dfs1 NilG _ l
+    | tail l == [] = []
+    | otherwise = l
 dfs1 (Node n l g) node discoveredL
     | n == node = dfs1 (Node n l g) (head(percorre l discoveredL)) (percorre l discoveredL)
     | otherwise = dfs1 g node discoveredL
