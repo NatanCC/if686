@@ -82,14 +82,22 @@ member e l = foldr (||) False (map (== e) l)
 
 -------------------- questão de lucifer fim
 
+sToInt :: String -> [Int]
+sToInt x = map1 position x
 
+sumList :: [Int] -> Int
+sumList xs = foldr (+) 0 xs
 
+sListToIList :: [String] -> [Int]
+sListToIList (x:xs) = (sumList (sToInt x): sListToIList xs)
+sListToIList [] = []
 
-sToInt :: String -> Int
-sToInt s = foldr (sToInt1) 0 s
+--recebe duas listas de inteiros, e retorna uma lista contendo
+--a soma dos elementos de cada lista
+sLI :: [Int] -> [Int] -> [Int]
+sLI x y = (sumList x):[sumList y]
 
-sToInt1 :: String -> Int
-sToInt1 [] = 0
-sToInt1 (x:xs) = (ord x - 96) + sToInt1 (xs)
+sLI1 :: [String] -> [Int]
+sLI1 x = foldr (sLI) [] (map sToInt x)
 	
 
