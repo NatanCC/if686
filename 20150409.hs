@@ -100,4 +100,22 @@ sLI x y = (sumList x):[sumList y]
 sLI1 :: [String] -> [Int]
 sLI1 x = foldr (sLI) [] (map sToInt x)
 	
+removeMenor0 :: [Int] -> [Int]
+removeMenor0 x = filter maior0 x
 
+maior0 :: Int -> Bool
+maior0 x = x > 0
+
+inter :: (Ord t, Eq t) => [t] -> [t] -> [t]
+inter l1 l2 = removeDup (filter f l1)
+    where f x = x `elem` l2
+
+diff :: (Ord t, Eq t) => [t] -> [t] -> [t]
+diff l1 l2 = removeDup (filter f l1)
+    where f x = not (x `elem` l2)
+
+removeDup :: (Eq t) => [t] -> [t]
+removeDup [] = []
+removeDup (x:xs)
+    | x `elem` xs = removeDup xs
+    | otherwise = x:removeDup xs
