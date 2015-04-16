@@ -35,7 +35,7 @@ data Tree t = NilT
 
 
 filterTree :: (Eq a) => (a -> Bool) -> Tree a -> [Tree a]
-filterTree _ NilT = [NilT]
+filterTree _ NilT = []
 filterTree f (Node n tl tr)
     | f n = [filterT f (Node n tl tr)] ++ filterTree f tl ++ filterTree f tr
     | otherwise = [filterT f tl] ++ [filterT f tr]
@@ -45,3 +45,27 @@ filterT _ NilT = NilT
 filterT f (Node n tl tr)
     | f n = (Node n (filterT f tl) (filterT f tr))
     | otherwise = NilT
+
+----------------------------------------------------------
+-- Exercício da aula
+----------------------------------------------------------
+
+funcFilter :: Int -> [[Int]] -> [[Int]]
+funcFilter n l = filter (\l -> (foldr (+) 0 l) >= n) l
+
+inter :: (Ord t, Eq t) => [t] -> [t] -> [t]
+inter l1 l2 = removeDup (filter f l1)
+    where f x = x `elem` l2
+
+diff :: (Ord t, Eq t) => [t] -> [t] -> [t]
+diff l1 l2 = removeDup (filter f l1)
+    where f x = not (x `elem` l2)
+
+removeDup :: (Eq t) => [t] -> [t]
+removeDup [] = []
+removeDup (x:xs)
+    | x `elem` xs = removeDup xs
+    | otherwise = x:removeDup xs
+
+mapfilter :: (a -> Bool) -> [[a]] ->[[a]]
+
