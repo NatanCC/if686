@@ -45,6 +45,33 @@ listGreater :: [Int] -> Int
 listGreater = foldr (>) 0
 
 
+{- Determine, sem usar o GHCi, os tipos das seguintes expressões:
+
+	foldr (:)
+
+	(:) :: a -> [a] -> [a]
+	foldr :: (k -> l -> l) -> l -> [k] -> l
+
+	k = a
+	l = [a]
+
+	(foldr (:)) :: [a] -> [a] -> [a]
+
+	-----------------------------------
+	
+	(.) :: (b -> c) -> (a -> b) -> a -> c
+
+    b = (b' -> c')
+    c = (a' -> b') -> a' -> c'
+    a = (b'' -> c'')
+    b' = (a'' -> b'')
+    c' = a'' -> c''
+
+    (.).(.) :: (b'' -> c'') -> (a' -> a'' -> b'') -> a' -> a'' -> c''
+
+	(.).(.) ::
+ -}
+
 
 
 
