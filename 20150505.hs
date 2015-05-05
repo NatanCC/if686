@@ -1,7 +1,8 @@
 ----------------------------------------------------------
 -- Trabalho 11 aluno: Natanael Souza dos Santos login: nss
 ----------------------------------------------------------
-
+import Data.Char
+import Data.Maybe
 -- Questão 1
 type HashTable = [(Int, Int)]
 baseHash :: HashTable
@@ -18,8 +19,9 @@ instance Monad Hash where
 	return t = (Just' t)
 
 
-get :: HashTable -> Int -> (Int, Int)
-get h key  = getItem h (hashFunction key)
+get :: HashTable -> Int -> Hash 	(Int, Int)
+get h key | hasItem h key (hashFunction key) = (Just' (getItem h (hashFunction key)))
+          | otherwise = Nothing'
 
 put :: HashTable -> (Int, Int) -> Hash HashTable
 put h (key, val) = (Just' (putItem h (key, val) (hashFunction key)))
@@ -73,11 +75,102 @@ main' = do
 	remove n 32
 
 
+getInfi1 :: IO ()
+getInfi1 = do {
+    line <- getLine;
+    x <- return $ codefi line;
+    if x /= Nothing
+        then lerString1 (splitWords (caseMaior (fromJust x)))
+        else putStrLn "Nothing"	   
+        
+}    
 
-main :: IO ()
-main = do
-	putStrLn "Digite uma cadeia de String"
-	s <- getLine
-	putStrLn s
+
+getInfi :: IO ()
+getInfi =
+	do {
+		line <- getLine;
+		putStrLn $ case codefi line of
+			Nothing -> "Nothing"
+			Just x ->  x
+		 
+	}
+
+
+codefi :: String  -> Maybe String
+codefi [] = Nothing
+codefi l 
+	| config l = Just l
+	| otherwise = Nothing
+
+
+config :: String -> Bool
+config [] = True
+config (x:xs) 
+	| check x ([1..26] ++ (map (negate) [6..31] )) = config xs
+	| otherwise = False
+
+
+
+check ::  Char  -> [Int] -> Bool
+check _ [] = False
+check ' ' _ = True
+check x  (y:ys) 
+	| position x == y = True
+	| otherwise = check x ys 
+	
+
+
+
+position  :: Char -> Int
+position a = (ord a) - 96
+
+caseMaior:: String -> String
+caseMaior [] = []
+caseMaior (x:xs)
+	| maior x [1..26] || x == ' ' = [toUpper x] ++ caseMaior xs
+	| otherwise = caseMaior xs
+
+
+maior :: Char -> [Int] ->Bool
+maior ' ' _ = False
+maior x (y:ys)
+	| position x == y = True
+	| otherwise = maior x ys
+
+checkespaco :: Char ->	Bool
+checkespaco ' '= True
+
+
+getWord :: String -> String
+getWord [] = []
+getWord (x:xs) 
+	| x /= ' ' = x: getWord xs
+	|otherwise = []
+
+dropWord :: String -> String
+dropWord [] = []
+dropWord (x:xs) 
+	| x /= ' ' = dropWord xs
+	| otherwise = xs
+
+dropSpace :: String -> String
+dropSpace [] = []
+dropSpace (x:xs) 
+	| x == ' ' = dropSpace xs
+	| otherwise = (x:xs)
+
+
+splitWords :: String -> [String]
+splitWords [] = []
+splitWords l  = [getWord l ] ++ splitWords (dropSpace (dropWord l))
+
+lerString1 :: [String] -> IO ()
+lerString1 [] = putStrLn []
+lerString1 (x:xs) = 
+	do {
+		putStrLn x;
+		lerString1 xs;
+	}
 
 
