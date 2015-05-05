@@ -79,10 +79,10 @@ getInfi1 :: IO ()
 getInfi1 = do {
     line <- getLine;
     x <- return $ codefi line;
-    if x /= Nothing
+    (if x /= Nothing
         then lerString1 (splitWords (caseMaior (fromJust x)))
-        else putStrLn "Nothing"	   
-        
+        else putStrLn "Nothing");
+    getInfi1;
 }    
 
 
